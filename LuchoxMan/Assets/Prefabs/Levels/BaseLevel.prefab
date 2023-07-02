@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5700913574508226279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7164649245325285297}
+  - component: {fileID: 8460227179302938463}
+  - component: {fileID: 1261508984475178466}
+  m_Layer: 0
+  m_Name: BaseLevel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7164649245325285297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700913574508226279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8460227179302938463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700913574508226279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533272a8c1f49fb4ea5f7140975dee64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Goals: 0
+  completedGoals: 0
+--- !u!114 &1261508984475178466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700913574508226279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc2c0c23f6e8d44c941d6ad30fcba23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelController: {fileID: 8460227179302938463}
+  floorPrefab: {fileID: 2703724192885842959, guid: 8f9ba80bd257ab5418ac86fb37de14c3, type: 3}
+  playerPrefab: {fileID: 2785562819252944436, guid: ff3e6ccd392937045bac888803032d27, type: 3}
+  boxPrefab: {fileID: 2616264781053759808, guid: 96a3e77738b20cc449b1bb936329f3d3, type: 3}
+  goalPrefab: {fileID: 1240621452421558984, guid: 5535870c677cce04886ce7f37300806f, type: 3}
+  obstaclePrefab: {fileID: 5555365568698796886, guid: 718c64b72ac56a840854297cb83f62b4, type: 3}
+  levelCSV: {fileID: 0}
