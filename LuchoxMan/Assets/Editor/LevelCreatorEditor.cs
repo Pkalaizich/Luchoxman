@@ -50,8 +50,11 @@ public class LevelCreatorEditor : Editor
             }
 
             GUIUtility.ExitGUI();
+            EditorUtility.SetDirty(creator.gameObject);
+
         }
         serializedObject.ApplyModifiedProperties();
+        
         Repaint();
     }
 }

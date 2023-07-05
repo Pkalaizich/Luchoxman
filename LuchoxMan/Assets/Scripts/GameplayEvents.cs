@@ -1,18 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameplayEvents : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private static GameplayEvents instance;
 
-    // Update is called once per frame
-    void Update()
+    private readonly UnityEvent levelCompleted = new UnityEvent();
+    private readonly UnityEvent levelLoaded = new UnityEvent();
+    private readonly UnityEvent dataLoaded= new UnityEvent();
+
+    public static UnityEvent OnLevelCompleted => instance.levelCompleted;
+    public static UnityEvent OnLevelLoaded => instance.levelLoaded;
+
+    public static UnityEvent OnDataLoaded => instance.dataLoaded;
+
+
+    private void Awake()
     {
-        
+        instance = this;
     }
 }

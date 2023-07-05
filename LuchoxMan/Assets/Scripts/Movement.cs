@@ -7,11 +7,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float m_MoveSpeed =5f;
     [SerializeField] private Transform m_MovePoint;
-
-    [SerializeField] private Button m_UpBtn;
-    [SerializeField] private Button m_DownBtn;
-    [SerializeField] private Button m_LeftBtn;
-    [SerializeField] private Button m_RightBtn;
+    
 
     [SerializeField] private LayerMask m_ObstacleLayers;
 
@@ -20,7 +16,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Sprite m_LeftSprite;
     [SerializeField] private Sprite m_RightSprite;
 
-    private SpriteRenderer sr;
+    private SpriteRenderer sr;    
     
 
     private bool moving =false;
@@ -28,23 +24,6 @@ public class Movement : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         m_MovePoint.parent = null;
-
-        m_UpBtn.onClick.AddListener(() => {
-            MovePoint(new Vector3(0, 1, 0));
-            sr.sprite = m_UpSprite;
-        });
-        m_DownBtn.onClick.AddListener(() => {
-            MovePoint(new Vector3(0, -1, 0));
-            sr.sprite = m_DownSprite;
-        });
-        m_LeftBtn.onClick.AddListener(() => {
-            MovePoint(new Vector3(-1, 0, 0));
-            sr.sprite = m_LeftSprite;
-        });
-        m_RightBtn.onClick.AddListener(() => {
-            MovePoint(new Vector3(1, 0, 0));
-            sr.sprite = m_RightSprite;
-        });        
     }
 
     
@@ -55,17 +34,15 @@ public class Movement : MonoBehaviour
         if(Vector3.Distance(transform.position,m_MovePoint.position)<=0.05f && moving==true)
         {
             moving = false;
-            SetButtonsStatus(true);            
+            UIController.Instance.SetButtonsStatus(true);                       
         }
     }
 
-    public void SetButtonsStatus(bool status)
+    private void OnDestroy()
     {
-        m_UpBtn.interactable = status;
-        m_DownBtn.interactable = status;
-        m_LeftBtn.interactable = status;
-        m_RightBtn.interactable = status;
-    }
+        if(m_MovePoint!= null)
+            Destroy(m_MovePoint.gameObject);
+    }    
 
     public void MovePoint(Vector3 direction)
     {
@@ -79,7 +56,7 @@ public class Movement : MonoBehaviour
                 if(other.GetComponent<Box>().ChangePosition(direction))
                 {
                     moving = true;
-                    SetButtonsStatus(false);
+                    UIController.Instance.SetButtonsStatus(false);                   
                     m_MovePoint.position += direction;
                 }
             }
@@ -87,9 +64,35 @@ public class Movement : MonoBehaviour
         else
         {
             moving = true;
-            SetButtonsStatus(false);
+            UIController.Instance.SetButtonsStatus(false);
             m_MovePoint.position += direction;
         }
     }
 
+    public void ChangeSprite(Direction newDirection)
+    {
+        switch(newDirection)
+        {
+            case Direction.Up:
+                sr.sprite = m_UpSprite;
+                break;
+            case Direction.Down:
+                sr.sprite = m_DownSprite;
+                break;
+            case Direction.Left:
+                sr.sprite = m_LeftSprite;
+                break;
+            case Direction.Right:
+                sr.sprite = m_RightSprite;
+                break;            
+        }
+    }
+}
+
+public enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right
 }

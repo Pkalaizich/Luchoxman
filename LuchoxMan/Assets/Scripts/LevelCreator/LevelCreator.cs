@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,10 +66,16 @@ public class LevelCreator : MonoBehaviour
                 }
                 else if(data[j + columnCount * i] == "G")
                 {
-                    UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Goal.prefab", typeof(GameObject));
+                    UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/FloorTile.prefab", typeof(GameObject));
                     if (prefab != null)
                     {
                         GameObject go = PrefabUtility.InstantiatePrefab(prefab, this.transform) as GameObject;
+                        go.transform.position = new Vector3(xPos, yPos, 0);
+                    }
+                    UnityEngine.Object goalPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Goal.prefab", typeof(GameObject));
+                    if (goalPrefab != null)
+                    {
+                        GameObject go = PrefabUtility.InstantiatePrefab(goalPrefab, this.transform) as GameObject;
                         go.transform.position = new Vector3(xPos, yPos, 0);
                     }                    
                     levelController.AddAmountOfGoals();
@@ -82,11 +89,33 @@ public class LevelCreator : MonoBehaviour
                         go.transform.position = new Vector3(xPos, yPos, 0);
                     }
                     UnityEngine.Object boxPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Box.prefab", typeof(GameObject));
-                    if (prefab != null)
+                    if (boxPrefab != null)
                     {
                         GameObject gotwo = PrefabUtility.InstantiatePrefab(boxPrefab, this.transform) as GameObject;
                         gotwo.transform.position = new Vector3(xPos, yPos, 0);
                     }                    
+                }
+                else if (data[j + columnCount * i] == "BG")
+                {
+                    UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/FloorTile.prefab", typeof(GameObject));
+                    if (prefab != null)
+                    {
+                        GameObject go = PrefabUtility.InstantiatePrefab(prefab, this.transform) as GameObject;
+                        go.transform.position = new Vector3(xPos, yPos, 0);
+                    }
+                    UnityEngine.Object boxPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Box.prefab", typeof(GameObject));
+                    if (boxPrefab != null)
+                    {
+                        GameObject gotwo = PrefabUtility.InstantiatePrefab(boxPrefab, this.transform) as GameObject;
+                        gotwo.transform.position = new Vector3(xPos, yPos, 0);
+                    }
+                    UnityEngine.Object goalPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Goal.prefab", typeof(GameObject));
+                    if (goalPrefab != null)
+                    {
+                        GameObject go = PrefabUtility.InstantiatePrefab(goalPrefab, this.transform) as GameObject;
+                        go.transform.position = new Vector3(xPos, yPos, 0);
+                    }
+                    levelController.AddAmountOfGoals();
                 }
                 else if(data[j + columnCount * i] == "P")
                 {
@@ -96,10 +125,10 @@ public class LevelCreator : MonoBehaviour
                         GameObject go = PrefabUtility.InstantiatePrefab(prefab, this.transform) as GameObject;
                         go.transform.position = new Vector3(xPos, yPos, 0);
                     }
-                    UnityEngine.Object boxPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Player.prefab", typeof(GameObject));
-                    if (prefab != null)
+                    UnityEngine.Object playerPrefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/SimpleObjects/Player.prefab", typeof(GameObject));
+                    if (playerPrefab != null)
                     {
-                        GameObject gotwo = PrefabUtility.InstantiatePrefab(boxPrefab, this.transform) as GameObject;
+                        GameObject gotwo = PrefabUtility.InstantiatePrefab(playerPrefab, this.transform) as GameObject;
                         gotwo.transform.position = new Vector3(xPos, yPos, 0);
                     }
                 }
@@ -107,3 +136,4 @@ public class LevelCreator : MonoBehaviour
         }
     }
 }
+#endif

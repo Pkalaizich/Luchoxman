@@ -25,13 +25,18 @@ public class Box : MonoBehaviour
         m_MovePoint.parent = null;
         onGoal = false;
         lvlController = FindObjectOfType<LevelController>();
+        StartCheck();
     }
 
     void Update()
     {        
         transform.position = Vector3.MoveTowards(transform.position, m_MovePoint.position, m_MoveSpeed * Time.deltaTime);
     }
-
+    private void OnDestroy()
+    {
+        if(m_MovePoint!= null)
+            Destroy(m_MovePoint.gameObject);
+    }
     public bool ChangePosition(Vector3 direction)
     {
         if (!Physics2D.OverlapCircle(m_MovePoint.position + direction, .05f, m_ObstacleLayers))
@@ -56,5 +61,16 @@ public class Box : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void StartCheck()
+    {
+        if (Physics2D.OverlapCircle(transform.position, .05f, m_GoalLayers))
+        {
+            if (!onGoal)
+                lvlController.ChangeCompletedGoals(1);
+            onGoal = true;
+            sr.color = m_OnGoalColor;
+        }
     }
 }

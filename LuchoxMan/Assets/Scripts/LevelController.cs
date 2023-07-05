@@ -9,7 +9,9 @@ public class LevelController : MonoBehaviour
     
     public int completedGoals =0;
 
-    private void Start()
+    public int levelHeight =0;
+
+    private void Awake()
     {
         completedGoals = 0;
     }
@@ -19,7 +21,7 @@ public class LevelController : MonoBehaviour
         completedGoals += i;
         if(completedGoals >= m_Goals) 
         {
-            Debug.Log("Ganaste");
+            GameplayEvents.OnLevelCompleted.Invoke();
         }
     }
 
