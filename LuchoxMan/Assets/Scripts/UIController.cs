@@ -30,6 +30,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private Button m_LeftBtn;
     [SerializeField] private Button m_RightBtn;
     [SerializeField] private Button m_ResetBtn;
+    [SerializeField] private Button m_VolumeBtn;
+    [SerializeField] private Sprite m_SoundOnSprite;
+    [SerializeField] private Sprite m_SoundOffSprite;
 
     [SerializeField] private Button m_NextLvlBtn;
     [SerializeField] private Button m_BackToMenu;
@@ -48,6 +51,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_MenuPanel;
     [SerializeField] private GameObject levelCompletedPanel;
 
+
+    
     private void Awake()
     {        
         GameplayEvents.OnLevelCompleted.AddListener(ShowLevelCompletedPanel);
@@ -58,6 +63,11 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
+        m_VolumeBtn.onClick.AddListener(() =>
+        {
+            AudioManager.instance.SetVolume();
+
+        });
         m_BackToMenu.onClick.AddListener(()=> {
             BackToMenu();
             AudioManager.instance.PlaySound("Button");
@@ -80,6 +90,18 @@ public class UIController : MonoBehaviour
             BackToMenu();
             Vibrator.Vibrate(50);
         });
+    }
+
+    public void SetVolumeIcon(bool volumeOn)
+    {
+        if(volumeOn)
+        {
+            m_VolumeBtn.image.sprite = m_SoundOnSprite;
+        }
+        else
+        {
+            m_VolumeBtn.image.sprite = m_SoundOffSprite;
+        }        
     }
 
     public void ShowLevelCompletedPanel()

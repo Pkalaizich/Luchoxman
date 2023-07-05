@@ -24,10 +24,11 @@ public class LevelManager : MonoBehaviour
     [System.Serializable]
     public class Data
     {
-        public int maxLevelAchieved = 0;
+        public int maxLevelAchieved = 0;        
     }
 
     private Data gameData;
+    
 
 
     [SerializeField] private List<GameObject> m_AllLevels= new List<GameObject>();
@@ -111,6 +112,7 @@ public class LevelManager : MonoBehaviour
 #endif
             gameData = JsonUtility.FromJson<Data>(json);
             maxLevelUnlocked = gameData.maxLevelAchieved;
+            
 
             Debug.Log("SAVED DATA LOADED");
         }

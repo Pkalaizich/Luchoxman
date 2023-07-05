@@ -14,6 +14,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private List<Sound> GameSounds = new List<Sound>();
     [SerializeField] private AudioSource m_Audio;
 
+
+    private float initialBgVolume = 0.5f;
+    private float initialSFXVolume = 1f;
+
+    private bool volumeOn = true;
     #region Singleton
 
     private static AudioManager _instance;
@@ -56,6 +61,23 @@ public class AudioManager : MonoBehaviour
             BGMusicSource.loop = true;
             BGMusicSource.Play();           
         }     
+    }
+
+    public void SetVolume()
+    {
+        if(!volumeOn)
+        {
+            BGMusicSource.volume = initialBgVolume;
+            m_Audio.volume = initialSFXVolume;
+            volumeOn= true;
+        }
+        else
+        {
+            BGMusicSource.volume = 0;
+            m_Audio.volume = 0;
+            volumeOn= false;
+        }
+        UIController.Instance.SetVolumeIcon(volumeOn);
     }
 
     public void PlaySound(string soundID) 
