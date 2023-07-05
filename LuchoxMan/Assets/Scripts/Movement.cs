@@ -56,14 +56,24 @@ public class Movement : MonoBehaviour
                 if(other.GetComponent<Box>().ChangePosition(direction))
                 {
                     moving = true;
+                    AudioManager.instance.PlaySound("Step");
                     UIController.Instance.SetButtonsStatus(false);                   
                     m_MovePoint.position += direction;
                 }
+                else
+                {
+                    AudioManager.instance.PlaySound("CantMove");
+                }
+            }
+            else
+            {
+                AudioManager.instance.PlaySound("CantMove");
             }
         }
         else
         {
             moving = true;
+            AudioManager.instance.PlaySound("Step");
             UIController.Instance.SetButtonsStatus(false);
             m_MovePoint.position += direction;
         }

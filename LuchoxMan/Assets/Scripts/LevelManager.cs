@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class LevelManager : MonoBehaviour
 {
@@ -20,6 +21,15 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
+    [System.Serializable]
+    public class Data
+    {
+        public int maxLevelAchieved = 0;
+    }
+
+    private Data gameData;
+
+
     [SerializeField] private List<GameObject> m_AllLevels= new List<GameObject>();
     public List<GameObject> AllLevels => m_AllLevels;
     private int currentLevel = 0;
@@ -37,7 +47,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        GameplayEvents.OnDataLoaded.Invoke();
+        LoadData();
         
     }
 
@@ -84,5 +94,57 @@ public class LevelManager : MonoBehaviour
         {
             maxLevelUnlocked = currentLevel;
         }
+        gameData.maxLevelAchieved= maxLevelUnlocked;
+        SaveData();
     }
+
+
+    public void LoadData()
+    {
+
+        if (File.Exists(GetCurrentPath() + "/game_saved.json"))
+        {
+#if UNITY_EDITOR_WIN
+            string json = File.ReadAllText(Application.dataPath + "/game_saved.json");
+#else
+            string json = File.ReadAllText(Application.persistentDataPath + "/game_saved.json");
+#endif
+            gameData = JsonUtility.FromJson<Data>(json);
+            maxLevelUnlocked = gameData.maxLevelAchieved;
+
+            Debug.Log("SAVED DATA LOADED");
+        }
+        else
+        {
+            //SI CARGA POR PRIMERA VEZ SE ASEGURA DE VER SI EL SEGUI PARTICIPANDO ES PREMIO VALIDO O NO
+            gameData = new Data();
+            gameData.maxLevelAchieved = maxLevelUnlocked;
+            SaveData();
+            
+            Debug.Log("NOT SAVED DATA EXIST");
+        }
+        GameplayEvents.OnDataLoaded.Invoke();
+    }
+
+    public void SaveData()
+    {
+        string json = JsonUtility.ToJson(gameData);
+#if UNITY_EDITOR_WIN
+        File.WriteAllText(Application.dataPath + "/game_saved.json", json);
+#else 
+        File.WriteAllText(Application.persistentDataPath + "/game_saved.json", json);
+#endif
+        Debug.Log("DATA SAVED");
+    }
+
+    private string GetCurrentPath()
+    {
+#if UNITY_EDITOR_WIN
+        string toReturn = Application.dataPath;
+#else
+        string toReturn = Application.persistentDataPath;
+#endif
+        return toReturn;
+    }
+
 }

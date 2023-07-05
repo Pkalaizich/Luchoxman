@@ -48,6 +48,7 @@ public class Box : MonoBehaviour
                     lvlController.ChangeCompletedGoals(1);
                 onGoal = true;
                 sr.color = m_OnGoalColor;
+                AudioManager.instance.PlaySound("Correct");
             }
             else
             {

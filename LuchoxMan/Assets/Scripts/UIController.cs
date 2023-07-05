@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class UIController : MonoBehaviour
 {
     #region Singleton
@@ -21,7 +22,7 @@ public class UIController : MonoBehaviour
         }
     }
     #endregion
-
+        
 
     [Header("Gameplay Buttons")]
     [SerializeField] private Button m_UpBtn;
@@ -57,20 +58,34 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        m_BackToMenu.onClick.AddListener(()=>BackToMenu());
+        m_BackToMenu.onClick.AddListener(()=> {
+            BackToMenu();
+            AudioManager.instance.PlaySound("Button");
+            Vibrator.Vibrate(50);
+        });
         m_NextLvlBtn.onClick.AddListener(() => {
             LevelManager.Instance.LoadLevelByIndex(LevelManager.Instance.CURRENTLEVEL);
             SetLevelCompletedPanelVisibility(false);
+            AudioManager.instance.PlaySound("Button");
+            Vibrator.Vibrate(50);
         });
-        m_ResetBtn.onClick.AddListener(() => LevelManager.Instance.ResetLevel());
-        m_LevelSelectButton.onClick.AddListener(() => { 
+        m_ResetBtn.onClick.AddListener(() => {
+            AudioManager.instance.PlaySound("Button");
+            LevelManager.Instance.ResetLevel();
+            AudioManager.instance.PlaySound("Queixo1");
+            Vibrator.Vibrate(50);
+        });
+        m_LevelSelectButton.onClick.AddListener(() => {
+            AudioManager.instance.PlaySound("Button");
             BackToMenu();
+            Vibrator.Vibrate(50);
         });
     }
 
     public void ShowLevelCompletedPanel()
     {
-        StartCoroutine(delayedAction());        
+        StartCoroutine(delayedAction());
+        AudioManager.instance.PlaySound("IenChe1");
     }
 
     public void SetMenuPanelVisibility(bool visible)
@@ -116,18 +131,26 @@ public class UIController : MonoBehaviour
         m_UpBtn.onClick.AddListener(() => {
             player.MovePoint(new Vector3(0,1,0));
             player.ChangeSprite(Direction.Up);
+            //Handheld.Vibrate();
+            Vibrator.Vibrate(50);
         });
         m_DownBtn.onClick.AddListener(() => {
             player.MovePoint(new Vector3(0, -1, 0));
             player.ChangeSprite(Direction.Down);
+            //Handheld.Vibrate();
+            Vibrator.Vibrate(50);
         });
         m_LeftBtn.onClick.AddListener(() => {
             player.MovePoint(new Vector3(-1, 0, 0));
             player.ChangeSprite(Direction.Left);
+            //Handheld.Vibrate();
+            Vibrator.Vibrate(50);
         });
         m_RightBtn.onClick.AddListener(() => {
             player.MovePoint(new Vector3(1, 0, 0));
             player.ChangeSprite(Direction.Right);
+            //Handheld.Vibrate();
+            Vibrator.Vibrate(50);
         });
     }
 
@@ -146,7 +169,9 @@ public class UIController : MonoBehaviour
             var capturedIndex = i;
             lvlButtons.Add(Instantiate(m_LevelButtonPrefab, m_LevelButtonsGrid.transform));
             lvlButtons[capturedIndex].GetComponent<Button>().onClick.AddListener(() => { 
-                LevelManager.Instance.LoadLevelByIndex(capturedIndex); 
+                LevelManager.Instance.LoadLevelByIndex(capturedIndex);
+                Vibrator.Vibrate(50);
+                AudioManager.instance.PlaySound("Button");
             });
         }
         RefreshButtonStatus();
@@ -184,6 +209,6 @@ public class UIController : MonoBehaviour
     public void UpdateCurrentLevelText()
     {
         m_CurrentLevelText.text = "Nivel " + (LevelManager.Instance.CURRENTLEVEL+1).ToString("00");
-    }
-    
+    }    
+
 }
